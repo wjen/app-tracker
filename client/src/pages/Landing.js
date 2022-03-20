@@ -1,13 +1,13 @@
 import React from 'react';
-import logo from '../assets/images/logo.svg';
 import main from '../assets/images/main.svg';
-
-import styled from 'styled-components';
+import Wrapper from '../assets/wrappers/LandingPageWrapper';
+import { Logo } from '../components';
+import { Link } from 'react-router-dom';
 const Landing = () => {
   return (
     <Wrapper>
       <nav>
-        <img src={logo} alt="app tracker" className="" />
+        <Logo />
       </nav>
       <div className="container page">
         <div className="info">
@@ -20,7 +20,9 @@ const Landing = () => {
             minus laboriosam aliquam. Eius optio reprehenderit corrupti, est
             minima voluptatibus maiores tempora?
           </p>
-          <button className="btn btn-hero">Login/Register</button>
+          <Link to="/register" className="btn btn-hero">
+            Login/Register
+          </Link>
         </div>
         <img src={main} alt="app tracker" className="img main-img" />
       </div>
@@ -28,41 +30,4 @@ const Landing = () => {
   );
 };
 
-const Wrapper = styled.main`
-  nav {
-    width: var(--fluid-width);
-    max-width: var(--max-width);
-    margin: 0 auto;
-    height: var(--nav-height);
-    display: flex;
-    align-items: center;
-  }
-  .page {
-    min-height: calc(100vh - var(--nav-height));
-    display: grid;
-    align-items: center;
-    margin-top: -3rem;
-  }
-  h1 {
-    font-wight: 700;
-    span {
-      color: var(--primary-500);
-    }
-  }
-  p {
-    color: var(--grey-600);
-  }
-  .main-img {
-    display: none;
-  }
-  @media (min-width: 992px) {
-    .page {
-      grid-template-columns: 1fr 1fr;
-      column-gap: 3rem;
-    }
-    .main-img {
-      display: block;
-    }
-  }
-`;
 export default Landing;
