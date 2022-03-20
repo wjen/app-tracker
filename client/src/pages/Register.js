@@ -3,26 +3,35 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { Logo, FormRow, Alert } from '../components';
 import Wrapper from '../assets/wrappers/RegisterPageWrapper';
+import { useAppContext } from '../context/appContext';
 
 const initialState = {
   name: '',
   email: '',
   password: '',
-  isMember: false,
+  isMember: true,
   showAlert: false,
 };
 
 const Register = () => {
   const [values, setValues] = useState(initialState);
   // global state and useNavigate
+  const { isLoading, showAlert, displayAlert } = useAppContext();
 
   const handleChange = (e) => {
-    console.log(e.target);
+    console.log(e.target.name);
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
 
   const onSubmit = (e) => {
+    console.log(values);
+
     e.preventDefault();
-    console.log(e.target);
+    const { name, email, password, isMember } = values;
+    if (!email || !password || (!isMember && !name)) {
+      displayAlert();
+      return;
+    }
   };
 
   const toggleMember = () => {
@@ -33,9 +42,9 @@ const Register = () => {
       <form onSubmit={onSubmit} className="form">
         <Logo />
         <h3>{values.isMember ? 'Login' : 'Register'}</h3>
-        {values.showAlert && <Alert />}
+        {showAlert && <Alert />}
         {/* Name input */}
-        {values.isMember && (
+        {!values.isMember && (
           <FormRow
             value={values.name}
             name="name"
@@ -62,9 +71,9 @@ const Register = () => {
         </button>
         <p>
           {' '}
-          {values.isMember ? 'Not a member yet' : 'Already a member?'}
+          {!values.isMember ? 'Not a member yet?' : 'Already a member?'}
           <button type="button" onClick={toggleMember} className="member-btn">
-            {values.isMember ? 'Login' : 'Register'}
+            {!values.isMember ? 'Login' : 'Register'}
           </button>
         </p>
       </form>
